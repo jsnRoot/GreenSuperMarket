@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <servlet>
+        <servlet-name>adminRegister</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.AdminRegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminRegister</servlet-name>
+        <url-pattern>/adminRegister</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>customerRegister</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.CustomerRegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>customerRegister</servlet-name>
+        <url-pattern>/customerRegister</url-pattern>
+    </servlet-mapping>
+
+</web-app>

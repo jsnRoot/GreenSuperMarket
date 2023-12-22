@@ -50,11 +50,30 @@ public class AddProductServlet extends HttpServlet {
             File file = new File("path");
             p.write(path+File.separator+fileName);
 
-            RequestDispatcher dis = request.getRequestDispatcher("/admin/viewProducts.jsp");
-            dis.forward(request, response);
+            HttpSession session = request.getSession();
+
+            session.setAttribute("msg", " <div class=\"alert alert-primary alert-dismissible fade show\" role=\"alert\">\n" +
+                    "                <i class=\"fa fa-exclamation-circle me-2\"></i>Product added successfully!\n" +
+                    "                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>\n" +
+                    "            </div>");
+
+
+//            RequestDispatcher dis = request.getRequestDispatcher("./admin/insertProduct.jsp");
+//            dis.forward(request, response);
+
+            response.sendRedirect("/admin/insertProduct.jsp");
+
         }else{
-            RequestDispatcher dis = request.getRequestDispatcher("/admin/insertProduct.jsp");
-            dis.forward(request, response);
+
+//            RequestDispatcher dis = request.getRequestDispatcher("./admin/insertProduct.jsp");
+//            dis.forward(request, response);
+            HttpSession session = request.getSession();
+
+            session.setAttribute("msg", " <div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
+                    "                <i class=\"fa fa-exclamation-circle me-2\"></i>Error Occured!\n" +
+                    "                <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" aria-label=\"Close\"></button>\n" +
+                    "            </div>");
+            response.sendRedirect("/admin/insertProduct.jsp");
         }
 
     }

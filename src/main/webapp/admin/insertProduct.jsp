@@ -1,3 +1,6 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,6 +118,15 @@
 
         <div class=" rounded h-100 p-4">
             <h6 class="mb-4">Add new product</h6>
+
+            <%
+                String msg = (String) session.getAttribute("msg");
+                if(msg!=null){ %>
+                <%= msg %>
+            <%
+                    session.removeAttribute("msg");
+                }
+            %>
 
             <form method="post" action="../addProduct" enctype="multipart/form-data">
 

@@ -13,14 +13,14 @@ public class ProductUtil {
 
     private static boolean isSuccess = false;
 
-    public static boolean addProduct(String item_name, int stock_amount, int weight, int price, String category, String tags, String comments, int discount, String availability){
+    public static boolean addProduct(String item_name, int stock_amount, int weight, int price, String category, String tags, String comments, int discount, String availability, String fileName){
         isSuccess = false;
 
         try {
 
             con= DbConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "INSERT INTO product(item_name, stock_amount, weight, price, category, tags, comments, discount, availability) VALUES('"+item_name+"', '"+stock_amount+"', '"+weight+"', '"+price+"', '"+category+"', '"+tags+"', '"+comments+"', '"+discount+"', '"+availability+"')";
+            String sql = "INSERT INTO product(item_name, stock_amount, weight, price, category, tags, comments, discount, availability, image) VALUES('"+item_name+"', '"+stock_amount+"', '"+weight+"', '"+price+"', '"+category+"', '"+tags+"', '"+comments+"', '"+discount+"', '"+availability+"', '"+fileName+"')";
             int rs = stmt.executeUpdate(sql);
             if(rs == 1){
                 isSuccess = true;

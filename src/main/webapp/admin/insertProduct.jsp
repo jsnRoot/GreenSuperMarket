@@ -116,7 +116,7 @@
         <div class=" rounded h-100 p-4">
             <h6 class="mb-4">Add new product</h6>
 
-            <form method="post" action="../addProduct">
+            <form method="post" action="../addProduct" enctype="multipart/form-data">
 
             <div class="form-floating mb-3">
                 <input type="Text" class="form-control" id="itemName" placeholder="Item Name" name="itemName">

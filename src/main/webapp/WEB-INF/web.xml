@@ -21,4 +21,14 @@
         <url-pattern>/customerRegister</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>addProduct</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.AddProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addProduct</servlet-name>
+        <url-pattern>/addProduct</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

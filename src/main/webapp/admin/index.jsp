@@ -59,14 +59,14 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="../admin/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Products</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="insertProduct.jsp" class="dropdown-item">Add Products</a>
-                            <a href="updateProduct.jsp" class="dropdown-item">Update Products</a>
-                            <a href="deleteProduct.jsp" class="dropdown-item">Delete Products</a>
-                            <a href="viewProducts.jsp" class="dropdown-item">View Products</a>
+                            <a href="../updateProductTable" class="dropdown-item">Update Products</a>
+                            <a href="../deleteProductTable" class="dropdown-item">Delete Products</a>
+                            <a href="../viewProductTable" class="dropdown-item">View Products</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -32,6 +31,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -117,90 +117,86 @@
 
 
         <div class=" rounded h-100 p-4">
-            <h6 class="mb-4">Add new product</h6>
-
+            <h6 class="mb-4">Products List</h6>
             <%
                 String msg = (String) session.getAttribute("msg");
                 if(msg!=null){ %>
-                <%= msg %>
+            <%= msg %>
             <%
                     session.removeAttribute("msg");
                 }
             %>
 
-            <form method="post" action="../addProduct" enctype="multipart/form-data">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Stock Amount</th>
+                        <th scope="col">Price Per 1Kg</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Availability</th>
+                        <th scope="col">Image</th>
+                        <td scope="col"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="itemName" placeholder="Item Name" name="itemName">
-                <label for="itemName">Item Name</label>
+                    <c:forEach var="product" items="${sessionScope.product}">
+
+                        <c:set var="id" value="${product.id}"></c:set>
+                        <c:set var="itemName" value="${product.item_name}"></c:set>
+                        <c:set var="stockAmount" value="${product.stock_amount}"></c:set>
+                        <c:set var="weight" value="${product.weight}"></c:set>
+                        <c:set var="price" value="${product.price}"></c:set>
+                        <c:set var="category" value="${product.category}"></c:set>
+                        <c:set var="tags" value="${product.tags}"></c:set>
+                        <c:set var="comments" value="${product.comments}"></c:set>
+                        <c:set var="discount" value="${product.discount}"></c:set>
+                        <c:set var="availability" value="${product.availability}"></c:set>
+                        <c:set var="image" value="${product.image}"></c:set>
+
+                        <tr>
+                            <th scope="row">${product.id}</th>
+                            <td>${product.item_name}</td>
+                            <td>${product.stock_amount}</td>
+                            <td>${product.price}</td>
+                            <td>${product.tags}</td>
+                            <td>${product.discount}</td>
+                            <td>${product.availability}</td>
+                            <td><img width="100px" height="100px" src="/uploads/${product.image}"></td>
+                            <td>
+
+                                <c:url value="updateProduct.jsp" var="productUpdate">
+                                    <c:param name="id" value="${id}"></c:param>
+                                    <c:param name="itemName" value="${itemName}"></c:param>
+                                    <c:param name="stockAmount" value="${stockAmount}"></c:param>
+                                    <c:param name="weight" value="${weight}"></c:param>
+                                    <c:param name="price" value="${price}"></c:param>
+                                    <c:param name="category" value="${category}"></c:param>
+                                    <c:param name="tags" value="${tags}"></c:param>
+                                    <c:param name="comments" value="${comments}"></c:param>
+                                    <c:param name="discount" value="${discount}"></c:param>
+                                    <c:param name="availability" value="${availability}"></c:param>
+                                    <c:param name="image" value="${image}"></c:param>
+                                </c:url>
+
+                                <a href="../productDelete?productID=${id}">
+                                    <button type="button" class="btn btn-outline-danger m-2">Remove</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                    </tbody>
+                </table>
             </div>
-
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="stockAmount" placeholder="Stock Amount in Kg" name="stockAmount">
-                <label for="stockAmount">Stock Amount in Kg</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="weight" placeholder="Weight 1Kg" name="weight" disabled value="1">
-                <label for="weight">Weight 1Kg</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="price" placeholder="Price in Rs for 1Kg" name="price">
-                <label for="price">Price in Rs for 1Kg</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <select class="form-select" id="category" aria-label="Floating label select example" name="category">
-                    <option value="Vegetables" selected="Vegetables">Vegetables</option>
-                    <option value="Fruits">Fruits</option>
-                    <option value="Meat">Meat</option>
-                    <option value="Fish">Fish</option>
-
-                </select>
-                <label for="category">Category</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input type="file" class="form-control" id="image" placeholder="Image" name="image">
-                <label for="image">Image</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <select class="form-select" id="tags" aria-label="Floating label select example" name="tags">
-                    <option value="Featured" selected="featured">Featured</option>
-                    <option value="Discount">Discount</option>
-                    <option value="None">None</option>
-                </select>
-                <label for="tags">Tags</label>
-            </div>
-
-
-
-            <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="comments" style="height: 150px;" name="comment"></textarea>
-                <label for="comments">Comments</label>
-            </div>
-
-
-
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="discounts" placeholder="Discount" name="discounts">
-                <label for="discounts">Discounts</label>
-            </div>
-
-            <div class="form-floating mb-3">
-                <select class="form-select" id="availability" aria-label="Floating label select example" name="availability">
-                    <option value="INSTOCK" selected>INSTOCK</option>
-                    <option value="OUTSTOCK">OUTSTOCK</option>
-                </select>
-                <label for="availability">Availability</label>
-            </div>
-
-            <button class="btn btn-primary w-100" type="submit">Submit</button>
-
-            </form>
         </div>
+
+
+
 
 
 
@@ -227,9 +223,13 @@
     <!-- Content End -->
 
 
+
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+
+
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -243,7 +243,17 @@
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- Template Javascript -->
+]
 <script src="js/main.js"></script>
+
+
+
+
 </body>
 
 </html>
+</html>
+
+
+
+

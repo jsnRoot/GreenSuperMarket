@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,6 +31,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 </head>
 
 <body>
@@ -59,14 +62,14 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="../admin/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Products</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="button.html" class="dropdown-item">Add Products</a>
-                        <a href="typography.html" class="dropdown-item">Update Products</a>
-                        <a href="element.html" class="dropdown-item">Delete Products</a>
-                        <a href="element.html" class="dropdown-item">View Products</a>
+                        <a href="insertProduct.jsp" class="dropdown-item">Add Products</a>
+                        <a href="../updateProductTable" class="dropdown-item">Update Products</a>
+                        <a href="../deleteProductTable" class="dropdown-item">Delete Products</a>
+                        <a href="../viewProductTable" class="dropdown-item">View Products</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -112,47 +115,119 @@
         <!-- Navbar End -->
 
         <div class=" rounded h-100 p-4">
-            <h6 class="mb-4">Add new product</h6>
+            <h6 class="mb-4">Update your product</h6>
 
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Item Name</label>
-            </div>
+            <%
+                String id = request.getParameter("id");
+                String itemName = request.getParameter("itemName");
+                String stockAmount = request.getParameter("stockAmount");
+                String weight = request.getParameter("weight");
+                String price = request.getParameter("price");
+                String category = request.getParameter("category");
+                String tags = request.getParameter("tags");
+                String comments = request.getParameter("comments");
+                String discount = request.getParameter("discount");
+                String availability = request.getParameter("availability");
+                String image = request.getParameter("image");
+            %>
 
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Stock Amount</label>
-            </div>
+            <%
+                String msg = (String) session.getAttribute("msg");
+                if(msg!=null){ %>
+            <%= msg %>
+            <%
+                    session.removeAttribute("msg");
+                }
+            %>
 
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Weight</label>
-            </div>
 
-            <div class="form-floating mb-3">
-                <input type="Text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Price</label>
-            </div>
 
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option selected="">Category</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-                <label for="floatingSelect">Works with selects</label>
-            </div>
 
-            <div class="form-floating mb-3">
-                <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Image</label>
-            </div>
 
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 150px;"></textarea>
-                <label for="floatingTextarea">Comments</label>
-            </div>
+            <form method="post" action="../productUpdate" enctype="multipart/form-data">
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="id" placeholder="Item Name" name="id" value="<%=id%>" required>
+                    <label for="id">ID</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="itemName" placeholder="Item Name" name="itemName" value="<%=itemName%>" required>
+                    <label for="itemName">Item Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="stockAmount" placeholder="Stock Amount in Kg" name="stockAmount" value="<%=stockAmount%>" required>
+                    <label for="stockAmount">Stock Amount in Kg</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="weight" placeholder="Weight 1Kg" name="weight" value="<%=weight%>" >
+                    <label for="weight">Weight 1Kg</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="price" placeholder="Price in Rs for 1Kg" name="price" value="<%=price%>" required>
+                    <label for="price">Price in Rs for 1Kg</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="category" aria-label="Floating label select example" name="category" required>
+                        <option value="<%=category%>" selected> <%=category%> </option>
+                        <option value="Vegetables">Vegetables</option>
+                        <option value="Fruits">Fruits</option>
+                        <option value="Meat">Meat</option>
+                        <option value="Fish">Fish</option>
+
+                    </select>
+                    <label for="category">Category</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="prevImg" placeholder="prevImg" name="prevImg" value="<%=image%>" required>
+                    <label for="prevImg">Current Image Name</label>
+                </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="file" class="form-control" id="image" placeholder="New Image" name="image" >
+                        <label for="image">New Image</label>
+                    </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="tags" aria-label="Floating label select example" name="tags" required>
+                        <option value="<%=tags%>" selected="featured"><%=tags%></option>
+                        <option value="Featured">Featured</option>
+                        <option value="Discount">Discount</option>
+                        <option value="None">None</option>
+                    </select>
+                    <label for="tags">Tags</label>
+                </div>
+
+
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="comments" style="height: 150px;" name="comment" required><%= comments %>></textarea>
+                    <label for="comments">Comments</label>
+                </div>
+
+
+
+                <div class="form-floating mb-3">
+                    <input type="Text" class="form-control" id="discounts" placeholder="Discount" name="discounts" value="<%= discount %>" required>
+                    <label for="discounts">Discounts</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="availability" aria-label="Floating label select example" name="availability" required>
+                        <option value="<%= availability %>" selected><%= availability %></option>
+                        <option value="INSTOCK">INSTOCK</option>
+                        <option value="OUTSTOCK">OUTSTOCK</option>
+                    </select>
+                    <label for="availability">Availability</label>
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">Update</button>
+            </form>
         </div>
 
 
@@ -197,7 +272,23 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+
+<script type="text/javascript">
+    $("#availability option").each(function() {
+        $(this).siblings('[value="'+ this.value +'"]').remove();
+    });
+    $("#category option").each(function() {
+        $(this).siblings('[value="'+ this.value +'"]').remove();
+    });
+    $("#tags option").each(function() {
+        $(this).siblings('[value="'+ this.value +'"]').remove();
+    });
+</script>
+
+
 </body>
+
+
 
 </html>
 </html>

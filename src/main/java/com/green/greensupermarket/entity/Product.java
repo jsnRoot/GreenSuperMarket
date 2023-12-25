@@ -13,7 +13,9 @@ public class Product {
 
     private String availability;
 
-    public Product(int id, String item_name, int stock_amount, int weight, int price, String category, String tags, String comments, int discount, String availability) {
+    private String image;
+
+    public Product(int id, String item_name, int stock_amount, int weight, int price, String category, String tags, String comments, int discount, String availability, String image) {
         this.id = id;
         this.item_name = item_name;
         this.stock_amount = stock_amount;
@@ -24,6 +26,7 @@ public class Product {
         this.comments = comments;
         this.discount = discount;
         this.availability = availability;
+        this.image = image;
     }
 
     public int getId() {
@@ -64,5 +67,9 @@ public class Product {
 
     public String getAvailability() {
         return availability;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

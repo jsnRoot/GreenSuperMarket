@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,14 +61,14 @@
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="../admin/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shopping-basket" aria-hidden="true"></i>Products</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="button.html" class="dropdown-item">Add Products</a>
-                        <a href="typography.html" class="dropdown-item">Update Products</a>
-                        <a href="element.html" class="dropdown-item">Delete Products</a>
-                        <a href="element.html" class="dropdown-item">View Products</a>
+                        <a href="insertProduct.jsp" class="dropdown-item">Add Products</a>
+                        <a href="../updateProductTable" class="dropdown-item">Update Products</a>
+                        <a href="../deleteProductTable" class="dropdown-item">Delete Products</a>
+                        <a href="../viewProductTable" class="dropdown-item">View Products</a>
                     </div>
                 </div>
                 <div class="nav-item dropdown">
@@ -111,58 +113,65 @@
         </nav>
         <!-- Navbar End -->
 
-        <div class="col-12">
-            <div class="rounded h-100 p-4">
-                <h6 class="mb-4">Select your product to delete</h6>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
+        <div class=" rounded h-100 p-4">
+            <h6 class="mb-4">Products List</h6>
+            <%
+                String msg = (String) session.getAttribute("msg");
+                if(msg!=null){ %>
+            <%= msg %>
+            <%
+                    session.removeAttribute("msg");
+                }
+            %>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Stock Amount</th>
+                        <th scope="col">Price Per 1Kg</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Availability</th>
+                        <th scope="col">Image</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <c:forEach var="product" items="${sessionScope.product}">
+
+                        <c:set var="id" value="${product.id}"></c:set>
+                        <c:set var="itemName" value="${product.item_name}"></c:set>
+                        <c:set var="stockAmount" value="${product.stock_amount}"></c:set>
+                        <c:set var="weight" value="${product.weight}"></c:set>
+                        <c:set var="price" value="${product.price}"></c:set>
+                        <c:set var="category" value="${product.category}"></c:set>
+                        <c:set var="tags" value="${product.tags}"></c:set>
+                        <c:set var="comments" value="${product.comments}"></c:set>
+                        <c:set var="discount" value="${product.discount}"></c:set>
+                        <c:set var="availability" value="${product.availability}"></c:set>
+                        <c:set var="image" value="${product.image}"></c:set>
+
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">ZIP</th>
-                            <th scope="col">Status</th>
+                            <th scope="row">${product.id}</th>
+                            <td>${product.item_name}</td>
+                            <td>${product.stock_amount}</td>
+                            <td>${product.price}</td>
+                            <td>${product.tags}</td>
+                            <td>${product.discount}</td>
+                            <td>${product.availability}</td>
+                            <td><img width="100px" height="100px" src="/uploads/${product.image}"></td>
+
                         </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>jhon@email.com</td>
-                            <td>USA</td>
-                            <td>123</td>
-                            <td>Member</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mark@email.com</td>
-                            <td>UK</td>
-                            <td>456</td>
-                            <td>Member</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>jacob@email.com</td>
-                            <td>AU</td>
-                            <td>789</td>
-                            <td>Member</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    </c:forEach>
+
+                    </tbody>
+                </table>
             </div>
         </div>
-
-
-
 
 
 
@@ -206,6 +215,12 @@
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+
 </body>
 
 </html>
+</html>
+
+
+
+

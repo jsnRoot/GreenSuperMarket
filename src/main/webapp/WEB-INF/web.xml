@@ -21,4 +21,60 @@
         <url-pattern>/customerRegister</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>addProduct</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.AddProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addProduct</servlet-name>
+        <url-pattern>/addProduct</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateProductTable</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.UpdateTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateProductTable</servlet-name>
+        <url-pattern>/updateProductTable</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>productUpdate</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.UpdateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>productUpdate</servlet-name>
+        <url-pattern>/productUpdate</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>deleteProductTable</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.DeleteTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteProductTable</servlet-name>
+        <url-pattern>/deleteProductTable</url-pattern>
+    </servlet-mapping>
+
+    
+    <servlet>
+        <servlet-name>productDelete</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>productDelete</servlet-name>
+        <url-pattern>/productDelete</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>viewProductTable</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.ViewTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>viewProductTable</servlet-name>
+        <url-pattern>/viewProductTable</url-pattern>
+    </servlet-mapping>
+    
+
 </web-app>

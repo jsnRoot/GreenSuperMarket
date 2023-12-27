@@ -20,18 +20,19 @@ public class AdminRegisterServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
 
-        String name  = request.getParameter("name");
+        String username  = request.getParameter("username");
         String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+//        String phone = request.getParameter("phone");
 
+        String password = request.getParameter("password");
+//        String username = request.getParameter("username");
+        String role = "admin";
 //        boolean result = AdminUtil.registerAdmin(name,email,phone,username,password);
 
         boolean result = AdminUtil.usernameAvailability(username);
 
         if(result == true){
-            boolean success = AdminUtil.registerAdmin(name,email,phone,username,password);
+            boolean success = AdminUtil.registerAdmin(username,email,password,role);
 
             if(success == true){
                 String message = " <div class=\"container\">\n" +

@@ -13,13 +13,13 @@ public class AdminUtil {
     private static ResultSet rs = null;
 
     private static boolean isSuccess = false;
-    public static boolean registerAdmin(String name, String email, String phone, String username, String password){
+    public static boolean registerAdmin(String uname, String email, String password, String role){
         isSuccess = false;
         try {
 
             con= DbConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "INSERT INTO admin(name, email, phone, username, password) VALUES('"+name+"', '"+email+"', '"+phone+"', '"+username+"', '"+password+"')";
+            String sql = "INSERT INTO user(username, email, password, role) VALUES('"+uname+"', '"+email+"', '"+password+"', '"+role+"')";
             int rs = stmt.executeUpdate(sql);
             if(rs == 1){
                 isSuccess = true;
@@ -41,7 +41,7 @@ public class AdminUtil {
         try{
             con=DbConnect.getConnection();
             stmt=con.createStatement();
-            String sql = "SELECT * FROM admin WHERE username = '"+username+"'";
+            String sql = "SELECT * FROM user WHERE username = '"+username+"'";
             rs = stmt.executeQuery(sql);
             if(!(rs.next())){
               isSuccess=true;

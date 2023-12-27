@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +33,9 @@
            </div> 
 
         <!-------------------- ------ Right Box ---------------------------->
-            
+
+<!--           <form method="post" action="../userVerify">-->
+
            <div class="col-md-6 right-box">
               <div class="row align-items-center">
 
@@ -40,23 +44,34 @@
                          <p>Sign up to enjoy fresh and healthy groceries delivered to your doorsteps.</p>
                     </div>
                     <div class="error_message_rext">
-                        <p style="font-family:Cairo, sans-serif ; color: red;">Login error! try Again</p>
+
+                        <%
+                            String msg = (String) session.getAttribute("msg");
+                            if(msg!=null){ %>
+                        <p style="font-family:Cairo, sans-serif ; color: red;"><%= msg %></p>
+                        <%
+                                session.removeAttribute("msg");
+                            }
+                        %>
+
+                    </div>
+
+
+                  <form method="post" action="../userVerify">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Create Username" name="username" required>
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Create Username">
+                        <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" name="email" required>
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="password" required>
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password">
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Conform Password">
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Conform Password" name="confirmPassword" required>
                     </div>
 
                     <div class="input-group mb-4 d-flex justify-content-between">
@@ -69,14 +84,21 @@
                     </div>
 
                     <div class="input-group mb-3">
-                        <button class="btn btn-lg btn-primary w-100 fs-6" style="background-color: #7fad39;border-color:#7fad39 ;">Signup</button>
+                        <button class="btn btn-lg btn-primary w-100 fs-6" style="background-color: #7fad39;border-color:#7fad39 ;" type="submit">Signup</button>
                     </div>
                     <div class="row">
-                        <small>Shopped with us before? Log in with your details <a href="Login.html">Login</a></small>
+                        <small>Shopped with us before? Log in with your details <a href="index.jsp">Login</a></small>
                     </div>
+
+                  </form>
+
      
               </div>
-           </div> 
+           </div>
+
+<!--           </form>-->
+
+
           </div>
         </div>
   </body>

@@ -75,6 +75,26 @@
         <servlet-name>viewProductTable</servlet-name>
         <url-pattern>/viewProductTable</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>userVerifyServlet</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.UserVerifyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userVerifyServlet</servlet-name>
+        <url-pattern>/userVerify</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>codeVerify</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.VerifyCodeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>codeVerify</servlet-name>
+        <url-pattern>/codeverify</url-pattern>
+    </servlet-mapping>
     
 
 </web-app>

@@ -40,7 +40,15 @@
                          <p>We are happy to have you back.</p>
                     </div>
                     <div class="error_message_rext">
-                        <p style="font-family:Cairo, sans-serif ; color: red;">Login error! try Again</p>
+                        <%
+                            String msg = (String) session.getAttribute("msg");
+                            String color = (String) session.getAttribute("color");
+                            if(msg!=null){ %>
+                        <p style="font-family:Cairo, sans-serif ; color: <%= color %>;"><%= msg %></p>
+                        <%
+                                session.removeAttribute("msg");
+                            }
+                        %>
                     </div>
 
                     <div class="input-group mb-3">
@@ -70,7 +78,7 @@
                     
 
                     <div class="row">
-                        <small>New member? <a href="SignUP.html">Sign Up</a></small>
+                        <small>New member? <a href="SignUP.jsp">Sign Up</a></small>
                     </div>
               </div>
            </div> 

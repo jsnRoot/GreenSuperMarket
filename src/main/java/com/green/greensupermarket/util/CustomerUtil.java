@@ -18,7 +18,7 @@ public class CustomerUtil {
 
             con= DbConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "INSERT INTO user(username, email, password, role) VALUES('"+username+"', '"+email+"', '"+password+"', '"+role+"')";
+            String sql = "INSERT INTO customer(username, email, password, role) VALUES('"+username+"', '"+email+"', '"+password+"', '"+role+"')";
             int rs = stmt.executeUpdate(sql);
             if(rs == 1){
                 isSuccess = true;
@@ -40,7 +40,7 @@ public class CustomerUtil {
         try{
             con=DbConnect.getConnection();
             stmt=con.createStatement();
-            String sql = "SELECT * FROM user WHERE username = '"+username+"'";
+            String sql = "SELECT * FROM customer WHERE username = '"+username+"'";
             rs = stmt.executeQuery(sql);
             if(!(rs.next())){
                 isSuccess=true;

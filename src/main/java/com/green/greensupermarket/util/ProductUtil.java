@@ -3,6 +3,7 @@ package com.green.greensupermarket.util;
 import com.green.greensupermarket.dbconnect.DbConnect;
 import com.green.greensupermarket.entity.Product;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -115,4 +116,65 @@ public class ProductUtil {
 
         return isSuccess;
     }
+
+    public static List<Product> getFeaturedProducts(){
+        ArrayList<Product> featuredProducts = new ArrayList<>();
+
+        try{
+            con = DbConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "select * from greensuper.product where tags = 'Featured' ";
+            rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                int id = rs.getInt(1);
+                String itemName = rs.getString(2);
+                int stockAmount = rs.getInt(3);
+                int weight = rs.getInt(4);
+                int price = rs.getInt(5);
+                String category = rs.getString(6);
+                String tags = rs.getString(7);
+                String comments = rs.getString(8);
+                int discount = rs.getInt(9);
+                String availability = rs.getString(10);
+                String image = rs.getString(11);
+                Product product = new Product(id,itemName,stockAmount,weight,price,category,tags,comments,discount,availability,image);
+                featuredProducts.add(product);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return  featuredProducts;
+    }
+
+    public static List<Product> getProductsByCategory(String cat){
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        try{
+            con = DbConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "SELECT * FROM product WHERE category='"+cat+"' ";
+            rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                int id = rs.getInt(1);
+                String itemName = rs.getString(2);
+                int stockAmount = rs.getInt(3);
+                int weight = rs.getInt(4);
+                int price = rs.getInt(5);
+                String category = rs.getString(6);
+                String tags = rs.getString(7);
+                String comments = rs.getString(8);
+                int discount = rs.getInt(9);
+                String availability = rs.getString(10);
+                String image = rs.getString(11);
+                Product product = new Product(id,itemName,stockAmount,weight,price,category,tags,comments,discount,availability,image);
+                filteredProducts.add(product);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return filteredProducts;
+    }
+
+
+
 }

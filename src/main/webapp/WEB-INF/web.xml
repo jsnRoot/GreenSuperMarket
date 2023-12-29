@@ -3,6 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.green.greensupermarket.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>adminRegister</servlet-name>
         <servlet-class>com.green.greensupermarket.controller.AdminRegisterServlet</servlet-class>
@@ -106,21 +116,22 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>/logout</servlet-name>
+        <servlet-name>logout</servlet-name>
         <servlet-class>com.green.greensupermarket.controller.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>/logout</servlet-name>
+        <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     
-    <filter>
-        <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.green.greensupermarket.flter.AuthenticationFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern>/admin/*</url-pattern>
-    </filter-mapping>
+    <servlet>
+        <servlet-name>category</servlet-name>
+        <servlet-class>com.green.greensupermarket.controller.CategoryFilterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>category</servlet-name>
+        <url-pattern>/category</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

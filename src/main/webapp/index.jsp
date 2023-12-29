@@ -1,3 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page import="com.green.greensupermarket.entity.Customer" %>
+<%@ page import="com.green.greensupermarket.entity.Admin" %>
+<%@ page import="javax.servlet.http.Cookie" %>
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -24,6 +32,37 @@
 </head>
 
 <body>
+
+    <%
+        String message = null;
+        String sessionID = null;
+        String userType = null;
+        String currentUser = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("msg")) message = cookie.getValue();
+                if(cookie.getName().equals("userType")) userType = cookie.getValue();
+                if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+                if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                if(userType.equals("customer")){
+//                    if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+//                }else if (userType.equals("admin")){
+//                    if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                }
+            }
+            request.setAttribute("currentUser",currentUser);
+
+        }
+
+
+    %>
+
+<%--    <c:set var="currentUser" value="${}" >--%>
+<%--    <%=message%><%=sessionID%><%=userType%><%=currentUser%>--%>
+
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -100,7 +139,17 @@
                             </div>
 
                             <div class="header__top__right__auth">
-                                <a href="Login_Signup/index.jsp"><i class="fa fa-user"></i> Login</a>
+
+
+                                <c:choose>
+                                    <c:when test="${empty currentUser}">
+                                        <a href="Login_Signup/index.jsp"> <i class="fa fa-user"> </i> Login</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="/logout"> <i class="fa fa-user"> </i> ${currentUser}</a>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                         </div>
                     </div>
@@ -226,6 +275,8 @@
     <!-- Categories Section End -->
 
     <!-- Featured Section Begin -->
+
+
     <section class="featured spad">
         <div class="container">
             <div class="row">

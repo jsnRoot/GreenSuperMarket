@@ -51,12 +51,13 @@
                         %>
                     </div>
 
+                  <form method="post" action="/login">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Username" name="username">
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password">
+                        <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" name="password">
                     </div>
 
                     <div class="input-group mb-4 d-flex justify-content-between">
@@ -80,6 +81,9 @@
                     <div class="row">
                         <small>New member? <a href="SignUP.jsp">Sign Up</a></small>
                     </div>
+
+                  </form>
+
               </div>
            </div> 
           </div>

@@ -1,4 +1,4 @@
-package com.green.greensupermarket.flter;
+package com.green.greensupermarket.filter;
 
 import java.io.IOException;
 

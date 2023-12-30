@@ -3,6 +3,7 @@ package com.green.greensupermarket.util;
 import com.green.greensupermarket.dbconnect.DbConnect;
 import com.green.greensupermarket.entity.Product;
 
+import javax.swing.*;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -173,6 +174,35 @@ public class ProductUtil {
             ex.printStackTrace();
         }
         return filteredProducts;
+    }
+
+    public static List<Product> discountProducts(){
+        ArrayList<Product> products = new ArrayList<>();
+
+        try{
+            con = DbConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "SELECT * FROM product WHERE tags = 'Discount'";
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String itemName = rs.getString(2);
+                int stockAmount = rs.getInt(3);
+                int weight = rs.getInt(4);
+                int price = rs.getInt(5);
+                String category = rs.getString(6);
+                String tags = rs.getString(7);
+                String comments = rs.getString(8);
+                int discount = rs.getInt(9);
+                String availability = rs.getString(10);
+                String image = rs.getString(11);
+                Product product = new Product(id, itemName, stockAmount, weight, price, category, tags, comments, discount, availability, image);
+                products.add(product);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return products;
     }
 
 

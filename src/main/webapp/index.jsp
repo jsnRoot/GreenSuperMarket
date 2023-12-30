@@ -105,7 +105,7 @@
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li><a href="shop-grid.jsp">Shop</a></li>
 
                 <li><a href="./contact.html">Contact</a></li>
             </ul>
@@ -174,7 +174,7 @@
                     <nav class="header__menu text-center">
                         <ul>
                             <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="./shop-grid.html">Shop</a></li>
+                            <li><a href="shop-grid.jsp">Shop</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -205,7 +205,7 @@
                             <i class="fa fa-bars"></i>
                             <span>All departments</span>
                         </div>
-                        <ul>
+                        <ul id="categories">
 
                             <c:forEach var="products" items="${allProducts}" >
                                 <li><a href="/category?category=${products.category}">${products.category}</a></li>
@@ -418,6 +418,22 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
+
+        <script>
+            var listForRemove = [];
+            var listOfUniqe = [];
+            $('#categories li').each(function () {
+
+            var text = $(this).text().trim();
+
+            if (listOfUniqe.indexOf(text) === -1)
+            listOfUniqe.push(text);
+            else
+            listForRemove.push($(this));
+        });
+
+            $(listForRemove).each(function () { $(this).remove(); });
+    </script>
 
 
 </body>

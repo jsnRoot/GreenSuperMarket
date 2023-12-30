@@ -1,3 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="javax.servlet.http.Cookie" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.green.greensupermarket.entity.Product" %>
+<%@ page import="com.green.greensupermarket.util.ProductUtil" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -24,6 +30,41 @@
 </head>
 
 <body>
+
+<%
+    String message = null;
+    String sessionID = null;
+    String userType = null;
+    String currentUser = null;
+    Cookie[] cookies = request.getCookies();
+    if(cookies != null){
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("msg")) message = cookie.getValue();
+            if(cookie.getName().equals("userType")) userType = cookie.getValue();
+            if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+            if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                if(userType.equals("customer")){
+//                    if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+//                }else if (userType.equals("admin")){
+//                    if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                }
+        }
+        request.setAttribute("currentUser",currentUser);
+
+    }
+
+    List<Product> featuredProducts = ProductUtil.getFeaturedProducts();
+    request.setAttribute("featuredProducts", featuredProducts);
+
+    List<Product> allProducts = ProductUtil.allProducts();
+    request.setAttribute("allProducts", allProducts);
+
+    List<Product> discountProducts = ProductUtil.discountProducts();
+    request.setAttribute("discountProducts", discountProducts);
+%>
+
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -52,13 +93,13 @@
                 </ul>
             </div>
             <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+                <a href="Login_Signup/index.jsp"><i class="fa fa-user"></i> Login</a>
             </div>
         </div>
-        <nav class="humberger__menu__nav mobile-menu text-center">
+        <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a href="index.jsp">Home</a></li>
-                <li><a href="shop-grid.jsp">Shop</a></li>
+                <li><a href="./shop-grid.html">Shop</a></li>
                 <li><a href="./contact.html">Contact</a></li>
             </ul>
         </nav>
@@ -71,7 +112,7 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> greensupermarrket.com</li>
+                <li><i class="fa fa-envelope"></i> greensupermarket.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -87,7 +128,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa fa-envelope"></i> greensupermarket.com</li>
-<!--                                <li>Free Shipping for all Order of $99</li>-->
+
                             </ul>
                         </div>
                     </div>
@@ -100,7 +141,15 @@
 
                             </div>
                             <div class="header__top__right__auth">
-                                <a href="Login_Signup/index.jsp"><i class="fa fa-user"></i> Login</a>
+
+                                <c:choose>
+                                    <c:when test="${empty currentUser}">
+                                        <a href="Login_Signup/index.jsp"> <i class="fa fa-user"> </i> Login</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="/logout"> <i class="fa fa-user"> </i> ${currentUser}</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>
@@ -118,7 +167,7 @@
                     <nav class="header__menu text-center">
                         <ul>
                             <li><a href="index.jsp">Home</a></li>
-                            <li class="active"><a href="shop-grid.jsp">Shop</a></li>
+                            <li class="active"><a href="./shop-grid.html">Shop</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -150,12 +199,10 @@
                             <i class="fa fa-bars"></i>
                             <span>All departments</span>
                         </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & nut</a></li>
-                            <li><a href="#">Fish</a></li>
-
+                        <ul id="categoriesTop">
+                            <c:forEach var="products" items="${allProducts}" >
+                                <li><a href="/category?category=${products.category}">${products.category}</a></li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -190,10 +237,10 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="breadcrumb__text">
-                        <h2>Checkout</h2>
+                        <h2>Green Supermarket</h2>
                         <div class="breadcrumb__option">
                             <a href="index.jsp">Home</a>
-                            <span>Checkout</span>
+                            <span>Shop</span>
                         </div>
                     </div>
                 </div>
@@ -202,138 +249,91 @@
     </section>
     <!-- Breadcrumb Section End -->
 
-    <!-- Checkout Section Begin -->
-    <section class="checkout spad">
+    <!-- Product Section Begin -->
+    <section class="product spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
-                    </h6>
-                </div>
-            </div>
-            <div class="checkout__form">
-                <h4>Billing Details</h4>
-                <form action="#">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Fist Name<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Last Name<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
-                                <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Town/City<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country/State<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Phone<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <p>Email<span>*</span></p>
-                                        <input type="text">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="acc">
-                                    Create an account?
-                                    <input type="checkbox" id="acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <p>Create an account by entering the information below. If you are a returning customer
-                                please login at the top of the page</p>
-                            <div class="checkout__input">
-                                <p>Account Password<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="diff-acc">
-                                    Ship to a different address?
-                                    <input type="checkbox" id="diff-acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Order notes<span>*</span></p>
-                                <input type="text"
-                                    placeholder="Notes about your order, e.g. special notes for delivery.">
-                            </div>
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Department</h4>
+                            <ul id="categories">
+                                <c:forEach var="products" items="${allProducts}" >
+                                    <li><a href="/category?category=${products.category}">${products.category}</a></li>
+                                </c:forEach>
+                            </ul>
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="checkout__order">
-                                <h4>Your Order</h4>
-                                <div class="checkout__order__products">Products <span>Total</span></div>
-                                <ul>
-                                    <li>Vegetable’s Package <span>$75.99</span></li>
-                                    <li>Fresh Vegetable <span>$151.99</span></li>
-                                    <li>Organic Bananas <span>$53.99</span></li>
-                                </ul>
-                                <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                <div class="checkout__order__total">Total <span>$750.99</span></div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="acc-or">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-or">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua.</p>
-                                <div class="checkout__input__checkbox">
-                                    <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <button type="submit" class="site-btn">PLACE ORDER</button>
+                        <div class="sidebar__item">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="product__discount">
+                        <div class="section-title product__discount__title">
+                            <h2>Sale Off</h2>
+                        </div>
+                        <div class="row">
+                            <div class="product__discount__slider owl-carousel">
+
+                                <c:forEach var="discountProducts" items="${discountProducts}">
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
+                                            <div class="product__discount__item__pic set-bg"
+                                                 data-setbg="uploads/${discountProducts.image}">
+                                                <div class="product__discount__percent">-${discountProducts.discount}%</div>
+                                                <ul class="product__item__pic__hover">
+                                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__discount__item__text">
+                                                <span>${discountProducts.category}</span>
+                                                <h5><a href="#">${discountProducts.item_name}</a></h5>
+                                                <div class="product__item__price">RS ${ discountProducts.price - (discountProducts.price * (discountProducts.discount /100))} <span>RS ${discountProducts.price}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+
                             </div>
                         </div>
                     </div>
-                </form>
+
+                    <div class="row">
+
+                        <c:forEach var="allProducts" items="${allProducts}">
+
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="uploads/${allProducts.image}">
+                                        <ul class="product__item__pic__hover">
+                                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="#">${allProducts.item_name}</a></h6>
+                                        <h5>RS ${allProducts.price}</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </c:forEach>
+                    </div>
+                    <div class="product__pagination">
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <!-- Checkout Section End -->
+    <!-- Product Section End -->
 
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -345,9 +345,9 @@
                             <a href="index.jsp"><img src="img/logo.png" alt=""></a>
                         </div>
                         <ul>
-                            <li>Address: NSBM Green University,Homagama</li>
+                            <li>Address: NSBM Green University,homagama</li>
                             <li>Phone: +94 5678 998</li>
-                            <li>Email: greensuper@gmail.com</li>
+                            <li>Email: greensupermarket@gmail.com</li>
                         </ul>
                     </div>
                 </div>
@@ -390,8 +390,6 @@
                             Copyright © Green Super Market, All Right Reserved |Designed By <a href="#aboutUs" target="_blank">Group A7</a> For Software Engineering 2 Module.</p></div>
                         <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
                     </div>
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -408,8 +406,36 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
- 
+    <script>
+        var listForRemove = [];
+        var listOfUniqe = [];
+        $('#categories li').each(function () {
 
+            var text = $(this).text().trim();
+
+            if (listOfUniqe.indexOf(text) === -1)
+                listOfUniqe.push(text);
+            else
+                listForRemove.push($(this));
+        });
+
+        $(listForRemove).each(function () { $(this).remove(); });
+    </script>
+    <script>
+        var listForRemove = [];
+        var listOfUniqe = [];
+        $('#categoriesTop li').each(function () {
+
+            var text = $(this).text().trim();
+
+            if (listOfUniqe.indexOf(text) === -1)
+                listOfUniqe.push(text);
+            else
+                listForRemove.push($(this));
+        });
+
+        $(listForRemove).each(function () { $(this).remove(); });
+    </script>
 </body>
 
 </html>

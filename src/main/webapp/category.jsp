@@ -99,7 +99,7 @@
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a href="index.jsp">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li><a href="shop-grid.jsp">Shop</a></li>
                 <li><a href="./contact.html">Contact</a></li>
             </ul>
         </nav>
@@ -159,7 +159,7 @@
                     <nav class="header__menu text-center">
                         <ul>
                             <li><a href="index.jsp">Home</a></li>
-                            <li class="active"><a href="./shop-grid.html">Shop</a></li>
+                            <li class="active"><a href="shop-grid.jsp">Shop</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>

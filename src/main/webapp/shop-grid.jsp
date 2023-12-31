@@ -176,9 +176,9 @@
                     <div class="header__cart">
                         <ul>
 
-                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span id="itemCount">0</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span>Rs. </span> <span id="totalCost">0</div>
                     </div>
                 </div>
             </div>
@@ -285,7 +285,7 @@
                                                 <ul class="product__item__pic__hover">
                                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li onclick="addToCart(${discountProducts.id},'${discountProducts.item_name}',${discountProducts.price - (discountProducts.price * (discountProducts.discount /100))})"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="product__discount__item__text">
@@ -302,16 +302,14 @@
                     </div>
 
                     <div class="row">
-
                         <c:forEach var="allProducts" items="${allProducts}">
-
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg" data-setbg="uploads/${allProducts.image}">
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li onclick="addToCart(${allProducts.id},'${allProducts.item_name}',${allProducts.price})"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -320,7 +318,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </c:forEach>
                     </div>
                     <div class="product__pagination">
@@ -421,6 +418,7 @@
 
         $(listForRemove).each(function () { $(this).remove(); });
     </script>
+
     <script>
         var listForRemove = [];
         var listOfUniqe = [];
@@ -436,6 +434,58 @@
 
         $(listForRemove).each(function () { $(this).remove(); });
     </script>
+
+
+<script>
+    const itemCountLabel = document.getElementById("itemCount");
+    const totalPriceLabel = document.getElementById("totalCost");
+
+    let cart = [];
+    let currentNumberOfItems = 0;
+    let currentTotalPrice = 0;
+
+    if (localStorage.getItem("cart")) {
+        // alert("cart is present");
+    } else {
+        // alert("cart is not present");
+    }
+
+    if (localStorage.getItem("currentNumberOfItems")) {
+        currentNumberOfItems = parseInt(
+            localStorage.getItem("currentNumberOfItems")
+        );
+        itemCountLabel.innerText = currentNumberOfItems;
+    } else {
+        itemCountLabel.innerText = currentNumberOfItems;
+    }
+
+    if (localStorage.getItem("currentTotalPrice")) {
+        currentTotalPrice = parseInt(localStorage.getItem("currentTotalPrice"));
+        totalPriceLabel.innerText = currentTotalPrice;
+    } else {
+        totalPriceLabel.innerText = currentTotalPrice;
+    }
+
+    function addToCart(id, name, price) {
+        let product = {
+            id,
+            name,
+            price,
+        };
+        cart.push(product);
+        currentNumberOfItems++;
+        currentTotalPrice = currentTotalPrice + price;
+        itemCountLabel.innerText = currentNumberOfItems;
+        totalPriceLabel.innerText = currentTotalPrice;
+        // setting items to the local storage
+        localStorage.setItem("cart", cart);
+        localStorage.setItem("currentNumberOfItems", currentNumberOfItems);
+        localStorage.setItem("currentTotalPrice", currentTotalPrice);
+    }
+</script>
+
+
+
 </body>
 
 </html>

@@ -446,6 +446,7 @@
 
     if (localStorage.getItem("cart")) {
         // alert("cart is present");
+        cart = JSON.parse(localStorage.getItem("cart"));
     } else {
         // alert("cart is not present");
     }

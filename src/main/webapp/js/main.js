@@ -199,6 +199,18 @@
         }
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
     /*-------------------
 		Quantity change
 	--------------------- */
@@ -208,12 +220,109 @@
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
+        var objectId = $(this).parent().attr("id");
         if ($button.hasClass('inc')) {
             var newVal = parseFloat(oldValue) + 1;
+            // alert($button.parents().find(".item-price").attr("id"));
+            // alert(objectId);
+            var total = $button.parents().find(`#${objectId}.item-price`).html() * newVal;
+            $button.closest('td').siblings().find(`#${objectId}.total-price`).html(total);
+
+        //     adding an item to cart
+
+            let cart = [];
+            cart = JSON.parse(localStorage.getItem("cart"));
+
+            let currentNumberOfItems = parseInt(localStorage.getItem("currentNumberOfItems"));
+            let currentTotalPrice = parseInt(localStorage.getItem("currentTotalPrice"));
+
+            let selectedItem = JSON.parse(JSON.stringify(cart.find(cart => cart.id == objectId)));
+
+            // adding item to the cart at the moment
+
+            let obj = {
+                id: selectedItem.id,
+                name : selectedItem.name,
+                price : selectedItem.price,
+                amount : 1
+
+            }
+
+            const existingObjectIndex = cart.findIndex((item) => item.id === obj.id && item.price === obj.price);
+
+            if (existingObjectIndex !== -1) {
+                // If the object exists, update the amount
+                cart[existingObjectIndex].amount += obj.amount;
+            } else {
+                // If the object doesn't exist, push it to the array
+                cart.push(obj);
+            }
+
+
+            // cart.push(product);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            currentNumberOfItems++;
+            currentTotalPrice = currentTotalPrice + selectedItem.price;
+
+            // setting the other items to the local storage
+            localStorage.setItem("currentNumberOfItems", currentNumberOfItems);
+            localStorage.setItem("currentTotalPrice", currentTotalPrice);
+
+            // changing the front end values
+
+            $('#itemCount').html(currentNumberOfItems);
+            $('#totalCost').html(currentTotalPrice);
+
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
                 var newVal = parseFloat(oldValue) - 1;
+                var total = $button.parents().find(`#${objectId}.item-price`).html() * newVal;
+                $button.closest('td').siblings().find(`#${objectId}.total-price`).html(total);
+
+            //     removing item from the cart
+                let cart = [];
+                cart = JSON.parse(localStorage.getItem("cart"));
+
+                let currentNumberOfItems = parseInt(localStorage.getItem("currentNumberOfItems"));
+                let currentTotalPrice = parseInt(localStorage.getItem("currentTotalPrice"));
+
+                let selectedItemId = JSON.parse(JSON.stringify(cart.findIndex(cart => cart.id == objectId)));
+                let selectedItem = JSON.parse(JSON.stringify(cart.find(cart => cart.id == objectId)));
+
+
+                let obj = {
+                    id: selectedItem.id,
+                    name : selectedItem.name,
+                    price : selectedItem.price,
+                    amount : 1
+
+                }
+
+                const existingObjectIndex = cart.findIndex((item) => item.id === obj.id && item.price === obj.price);
+
+                if (existingObjectIndex !== -1) {
+                    // If the object exists, update the amount
+                    cart[existingObjectIndex].amount -= obj.amount;
+                } else {
+                    // If the object doesn't exist, push it to the array
+                    cart.push(obj);
+                }
+
+
+
+
+                // cart.splice(selectedItemId,1);
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+                currentNumberOfItems--;
+                currentTotalPrice = currentTotalPrice - selectedItem.price;
+                localStorage.setItem("currentNumberOfItems", currentNumberOfItems);
+                localStorage.setItem("currentTotalPrice", currentTotalPrice);
+                $('#itemCount').html(currentNumberOfItems);
+                $('#totalCost').html(currentTotalPrice);
+
             } else {
                 newVal = 0;
             }
@@ -221,4 +330,72 @@
         $button.parent().find('input').val(newVal);
     });
 
+    proQty.on('click', function () {
+        var total=0;
+        $(".total-price").each(function (index, element) {
+            // element == this
+            // alert($(this).html());
+            // total = total + element.html();
+
+            if($(this)!=undefined){
+                total = total + parseInt($(this).html());
+            }
+        });
+        // alert(total);
+        $("#subtotal").html(total);
+        $("#total").html(total);
+    })
 })(jQuery);
+
+var removeFromCart = $('.icon_close');
+removeFromCart.on('click', function () {
+    var $button = $(this);
+    var objectId = $(this).attr("id");
+
+    // taking the total
+    var total = $(`#${objectId}.total-price`).html();
+    // taking the quentity
+    var deleteCount = $(`#${objectId}.box`).val();
+
+
+
+    // alert("Obejct Id" + objectId);
+    // alert("Quentity" + deleteCount);
+    // alert("Total" + total);
+
+//     remove the object from the cart
+
+    let cart = [];
+    cart = JSON.parse(localStorage.getItem("cart"));
+    let selectedItem = JSON.parse(JSON.stringify(cart.find(cart => cart.id == objectId)));
+    // let itemToBeRemoved = JSON.stringify(selectedItem);
+    cart.splice(
+        cart.findIndex((a) => a.id === selectedItem.id),
+        1
+    );
+    // alert(JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+//     update current total price in the storage
+    let currentTotalPrice = parseInt(localStorage.getItem("currentTotalPrice"));
+    currentTotalPrice = currentTotalPrice - total;
+    $('#totalCost').html(currentTotalPrice);
+
+    localStorage.setItem("currentTotalPrice", currentTotalPrice);
+
+
+//     update the current number of items in the storage
+    let currentNumberOfItems = parseInt(localStorage.getItem("currentNumberOfItems"));
+    currentNumberOfItems = currentNumberOfItems - deleteCount;
+    $('#itemCount').html(currentNumberOfItems);
+    localStorage.setItem("currentNumberOfItems", currentNumberOfItems);
+
+    $("#subtotal").html(currentTotalPrice);
+    $("#total").html(currentTotalPrice);
+    $button.parents().find(`tr.${objectId}`)
+    $button.closest('tr').remove();
+})(jQuery);
+
+
+
+

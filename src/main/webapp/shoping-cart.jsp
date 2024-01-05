@@ -1,3 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="javax.servlet.http.Cookie" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.green.greensupermarket.entity.Product" %>
+<%@ page import="com.green.greensupermarket.util.ProductUtil" %>
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -24,6 +32,41 @@
 </head>
 
 <body>
+
+<%
+    String message = null;
+    String sessionID = null;
+    String userType = null;
+    String currentUser = null;
+    Cookie[] cookies = request.getCookies();
+    if(cookies != null){
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("msg")) message = cookie.getValue();
+            if(cookie.getName().equals("userType")) userType = cookie.getValue();
+            if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+            if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                if(userType.equals("customer")){
+//                    if(cookie.getName().equals("customer")) currentUser = cookie.getValue();
+//                }else if (userType.equals("admin")){
+//                    if(cookie.getName().equals("admin")) currentUser = cookie.getValue();
+//
+//                }
+        }
+        request.setAttribute("currentUser",currentUser);
+
+    }
+
+    List<Product> featuredProducts = ProductUtil.getFeaturedProducts();
+    request.setAttribute("featuredProducts", featuredProducts);
+
+    List<Product> allProducts = ProductUtil.allProducts();
+    request.setAttribute("allProducts", allProducts);
+
+
+
+%>
+
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -127,9 +170,9 @@
                     <div class="header__cart">
                         <ul>
 
-                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span id="itemCount">0</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div class="header__cart__price">item: <span>Rs. </span> <span id="totalCost"></div>
                     </div>
                 </div>
             </div>
@@ -151,11 +194,10 @@
                             <span>All departments</span>
                         </div>
 
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut </a></li>
-                            <li><a href="#">Fish </a></li>
+                        <ul id="categories">
+                            <c:forEach var="products" items="${allProducts}" >
+                                <li><a href="/category?category=${products.category}">${products.category}</a></li>
+                            </c:forEach>
 
                         </ul>
                     </div>
@@ -219,73 +261,8 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt="">
-                                        <h5>Vegetable’s Package</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $55.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $110.00
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-2.jpg" alt="">
-                                        <h5>Fresh Garden Vegetable</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $39.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $39.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-3.jpg" alt="">
-                                        <h5>Organic Bananas</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        $69.00
-                                    </td>
-                                    <td class="shoping__cart__quantity">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        $69.99
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <span class="icon_close"></span>
-                                    </td>
-                                </tr>
+                            <tbody id="tableSection">
+
                             </tbody>
                         </table>
                     </div>
@@ -294,28 +271,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
+<%--                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>--%>
+<%--                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>--%>
+<%--                            Upadate Cart</a>--%>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
+<%--                    <div class="shoping__continue">--%>
+<%--                        <div class="shoping__discount">--%>
+<%--                            <h5>Discount Codes</h5>--%>
+<%--                            <form action="#">--%>
+<%--                                <input type="text" placeholder="Enter your coupon code">--%>
+<%--                                <button type="submit" class="site-btn">APPLY COUPON</button>--%>
+<%--                            </form>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+                            <li>Subtotal <span>Rs. <span id="subtotal">454.98</span> </span> </li>
+                            <li>Total <span>Rs. <span id="total">454.98</span> </span> </li>
                         </ul>
                         <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
@@ -388,6 +365,69 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+
+<script>
+    const itemCountLabel = document.getElementById("itemCount");
+    const totalPriceLabel = document.getElementById("totalCost");
+
+    const subtotal = document.getElementById("subtotal");
+    const total = document.getElementById("total");
+
+
+    let cart = [];
+    let currentNumberOfItems = 0;
+    let currentTotalPrice = 0;
+
+    if (localStorage.getItem("cart")) {
+        // alert("cart is present");
+        cart = JSON.parse(localStorage.getItem("cart"));
+    } else {
+        // alert("cart is not present");
+    }
+
+    if (localStorage.getItem("currentNumberOfItems")) {
+        currentNumberOfItems = parseInt(
+            localStorage.getItem("currentNumberOfItems")
+        );
+        itemCountLabel.innerText = currentNumberOfItems;
+    } else {
+        itemCountLabel.innerText = currentNumberOfItems;
+    }
+
+    if (localStorage.getItem("currentTotalPrice")) {
+        currentTotalPrice = parseInt(localStorage.getItem("currentTotalPrice"));
+        totalPriceLabel.innerText = currentTotalPrice;
+        subtotal.innerText = currentTotalPrice;
+        total.innerText = currentTotalPrice;
+    } else {
+        totalPriceLabel.innerText = currentTotalPrice;
+    }
+
+    console.log(cart);
+
+    let tableOutput = cart.map((item)=>{
+        return '<tr class="'+ item.id +'">' +
+            '<td class="shoping__cart__item">' +
+            '   <img src="img/cart/cart-1.jpg" alt="" /><h5> ' + item.name + '</h5>' +
+            '</td>' +
+            '<td class="shoping__cart__price">Rs. <span class="item-price" id="'+ item.id +'">' + item.price +'</span></td>' +
+            '<td class="shoping__cart__quantity">' +
+            '   <div class="quantity"><div class="pro-qty" id="'+ item.id +'"><input type="text" value="'+ item.amount +'" class="box" id="'+item.id+'"/></div></div>' +
+            '</td>' +
+            '<td class="shoping__cart__total">Rs. <span class="total-price" id="'+ item.id +'">' + item.price * item.amount + '</span> ' +
+            '</td>' +
+            '<td class="shoping__cart__item__close"><span class="icon_close" id="'+ item.id +'"></span></td>' +
+            '</tr>'
+    }).join('');
+    console.log(tableOutput);
+
+    const dataBinding = (cart) =>{
+        let x = document.getElementById("tableSection");
+        x.innerHTML = tableOutput;
+    }
+    dataBinding(cart);
+</script>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
@@ -397,6 +437,21 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 
+    <script>
+        var listForRemove = [];
+        var listOfUniqe = [];
+        $('#categories li').each(function () {
+
+            var text = $(this).text().trim();
+
+            if (listOfUniqe.indexOf(text) === -1)
+                listOfUniqe.push(text);
+            else
+                listForRemove.push($(this));
+        });
+
+        $(listForRemove).each(function () { $(this).remove(); });
+    </script>
 
 </body>
 

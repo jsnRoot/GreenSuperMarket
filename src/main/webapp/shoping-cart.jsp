@@ -408,7 +408,7 @@
     let tableOutput = cart.map((item)=>{
         return '<tr class="'+ item.id +'">' +
             '<td class="shoping__cart__item">' +
-            '   <img src="img/cart/cart-1.jpg" alt="" /><h5> ' + item.name + '</h5>' +
+            '   <img src="uploads/'+item.image+'" alt="" /><h5> ' + item.name + '</h5>' +
             '</td>' +
             '<td class="shoping__cart__price">Rs. <span class="item-price" id="'+ item.id +'">' + item.price +'</span></td>' +
             '<td class="shoping__cart__quantity">' +

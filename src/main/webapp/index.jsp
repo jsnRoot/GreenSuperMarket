@@ -312,7 +312,7 @@
                                 <ul class="featured__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li onclick="addToCart(${product.id},'${product.item_name}',${product.price}, 1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li onclick="addToCart('${product.image}',${product.id},'${product.item_name}',${product.price}, 1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="featured__item__text">
@@ -467,11 +467,12 @@
             totalPriceLabel.innerText = currentTotalPrice;
         }
 
-        function addToCart(id, name, price, amount) {
+        function addToCart(image, id, name, price, amount) {
 
             // have the change the function here
 
             let obj = {
+                image,
                 id,
                 name,
                 price,

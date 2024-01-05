@@ -182,7 +182,7 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="shoping-cart.html"><i class="fa fa-shopping-bag"></i> <span id="itemCount">0</span></a></li>
+                            <li><a href="shoping-cart.jsp"><i class="fa fa-shopping-bag"></i> <span id="itemCount">0</span></a></li>
                         </ul>
                         <div class="header__cart__price">item: <span>Rs. </span> <span id="totalCost">0</div>
                     </div>
@@ -312,7 +312,7 @@
                                 <ul class="featured__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li onclick="addToCart(${product.id},'${product.item_name}',${product.price})"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li onclick="addToCart(${product.id},'${product.item_name}',${product.price}, 1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="featured__item__text">
@@ -446,6 +446,7 @@
 
         if (localStorage.getItem("cart")) {
             // alert("cart is present");
+            cart = JSON.parse(localStorage.getItem("cart"));
         } else {
             // alert("cart is not present");
         }
@@ -466,19 +467,35 @@
             totalPriceLabel.innerText = currentTotalPrice;
         }
 
-        function addToCart(id, name, price) {
-            let product = {
+        function addToCart(id, name, price, amount) {
+
+            // have the change the function here
+
+            let obj = {
                 id,
                 name,
                 price,
+                amount
             };
-            cart.push(product);
+
+
+            const existingObjectIndex = cart.findIndex((item) => item.id === obj.id && item.price === obj.price);
+            if (existingObjectIndex !== -1) {
+                // If the object exists, update the amount
+                cart[existingObjectIndex].amount += obj.amount;
+            } else {
+                // If the object doesn't exist, push it to the array
+                cart.push(obj);
+            }
+
+            // cart.push(product);
+
             currentNumberOfItems++;
             currentTotalPrice = currentTotalPrice + price;
             itemCountLabel.innerText = currentNumberOfItems;
             totalPriceLabel.innerText = currentTotalPrice;
             // setting items to the local storage
-            localStorage.setItem("cart", cart);
+            localStorage.setItem("cart", JSON.stringify(cart));
             localStorage.setItem("currentNumberOfItems", currentNumberOfItems);
             localStorage.setItem("currentTotalPrice", currentTotalPrice);
         }

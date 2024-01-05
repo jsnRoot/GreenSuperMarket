@@ -285,7 +285,7 @@
                                                 <ul class="product__item__pic__hover">
                                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                                    <li onclick="addToCart(${discountProducts.id},'${discountProducts.item_name}',${discountProducts.price - (discountProducts.price * (discountProducts.discount /100))})"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li onclick="addToCart('${discountProducts.image}' ,${discountProducts.id},'${discountProducts.item_name}',${discountProducts.price - (discountProducts.price * (discountProducts.discount /100))},1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="product__discount__item__text">
@@ -309,7 +309,7 @@
                                         <ul class="product__item__pic__hover">
                                             <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                            <li onclick="addToCart(${allProducts.id},'${allProducts.item_name}',${allProducts.price}, 1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li onclick="addToCart('${allProducts.image}',${allProducts.id},'${allProducts.item_name}',${allProducts.price}, 1)"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -466,9 +466,10 @@
         totalPriceLabel.innerText = currentTotalPrice;
     }
 
-    function addToCart(id, name, price, amount) {
+    function addToCart(image,id, name, price, amount) {
         // have to change the function here
         let obj = {
+            image,
             id,
             name,
             price,

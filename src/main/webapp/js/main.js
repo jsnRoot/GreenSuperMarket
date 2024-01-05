@@ -241,6 +241,7 @@
             // adding item to the cart at the moment
 
             let obj = {
+                image:selectedItem.image,
                 id: selectedItem.id,
                 name : selectedItem.name,
                 price : selectedItem.price,
@@ -293,6 +294,7 @@
 
 
                 let obj = {
+                    image: selectedItem.image,
                     id: selectedItem.id,
                     name : selectedItem.name,
                     price : selectedItem.price,

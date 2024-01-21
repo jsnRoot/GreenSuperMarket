@@ -98,10 +98,15 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-truck me-2"></i>Orders</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Pending Orders</a>
+                            <a href="../ViewOrdersServlet" class="dropdown-item">Pending Orders</a>
                             <a href="signup.html" class="dropdown-item">Cancel Orders</a>
                         </div>
                     </div>
+                    <a href="../ViewCommentsServlet" class="nav-item nav-link "><i
+                            class="fa fa-envelope me-2"></i>Comments
+                    </a>
+
+
                 </div>
             </nav>
         </div>

@@ -79,6 +79,9 @@
                         <a href="signup.html" class="dropdown-item">Cancel Orders</a>
                     </div>
                 </div>
+                <a href="../admin/" class="nav-item nav-link "><i
+                        class="fa fa-envelope me-2"></i>Comments
+                </a>
             </div>
         </nav>
     </div>
@@ -109,6 +112,7 @@
                         <a href="#" class="dropdown-item">Settings</a>
                         <a href="#" class="dropdown-item">Log Out</a>
                     </div>
+
                 </div>
             </div>
         </nav>

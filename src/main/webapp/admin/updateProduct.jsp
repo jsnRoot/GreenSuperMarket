@@ -109,6 +109,9 @@
                         <a href="#" class="dropdown-item">Settings</a>
                         <a href="#" class="dropdown-item">Log Out</a>
                     </div>
+                    <a href="../admin/" class="nav-item nav-link "><i
+                            class="fa fa-envelope me-2"></i>Comments
+                    </a>
                 </div>
             </div>
         </nav>

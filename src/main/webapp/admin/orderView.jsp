@@ -118,7 +118,7 @@
         <!-- Navbar End -->
 
         <div class=" rounded h-100 p-4">
-            <h6 class="mb-4">Products List</h6>
+            <h6 class="mb-4">Orders List</h6>
             <%
                 String msg = (String) session.getAttribute("msg");
                 if(msg!=null){ %>
@@ -133,61 +133,27 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Item Name</th>
-                        <th scope="col">Stock Amount</th>
-                        <th scope="col">Price Per 1Kg</th>
-                        <th scope="col">Tags</th>
-                        <th scope="col">Discount</th>
-                        <th scope="col">Availability</th>
-                        <th scope="col">Image</th>
-                        <td scope="col"></td>
+                        <th scope="col">Payer</th>
+                        <th scope="col">Transaction</th>
+                        <th scope="col">Shipping</th>
+                        <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    <c:forEach var="product" items="${sessionScope.product}">
+                    <c:forEach var="order" items="${sessionScope.order}">
 
-                        <c:set var="id" value="${product.id}"></c:set>
-                        <c:set var="itemName" value="${product.item_name}"></c:set>
-                        <c:set var="stockAmount" value="${product.stock_amount}"></c:set>
-                        <c:set var="weight" value="${product.weight}"></c:set>
-                        <c:set var="price" value="${product.price}"></c:set>
-                        <c:set var="category" value="${product.category}"></c:set>
-                        <c:set var="tags" value="${product.tags}"></c:set>
-                        <c:set var="comments" value="${product.comments}"></c:set>
-                        <c:set var="discount" value="${product.discount}"></c:set>
-                        <c:set var="availability" value="${product.availability}"></c:set>
-                        <c:set var="image" value="${product.image}"></c:set>
-
+                        <c:set var="id" value="${order.id}"></c:set>
+                        <c:set var="itemName" value="${order.payer}"></c:set>
+                        <c:set var="stockAmount" value="${order.transaction}"></c:set>
+                        <c:set var="weight" value="${order.shipping}"></c:set>
+                        <c:set var="price" value="${order.description}"></c:set>
                         <tr>
-                            <th scope="row">${product.id}</th>
-                            <td>${product.item_name}</td>
-                            <td>${product.stock_amount}</td>
-                            <td>${product.price}</td>
-                            <td>${product.tags}</td>
-                            <td>${product.discount}</td>
-                            <td>${product.availability}</td>
-                            <td><img width="100px" height="100px" src="/uploads/${product.image}"></td>
-                            <td>
-
-                                <c:url value="updateProduct.jsp" var="productUpdate">
-                                    <c:param name="id" value="${id}"></c:param>
-                                    <c:param name="itemName" value="${itemName}"></c:param>
-                                    <c:param name="stockAmount" value="${stockAmount}"></c:param>
-                                    <c:param name="weight" value="${weight}"></c:param>
-                                    <c:param name="price" value="${price}"></c:param>
-                                    <c:param name="category" value="${category}"></c:param>
-                                    <c:param name="tags" value="${tags}"></c:param>
-                                    <c:param name="comments" value="${comments}"></c:param>
-                                    <c:param name="discount" value="${discount}"></c:param>
-                                    <c:param name="availability" value="${availability}"></c:param>
-                                    <c:param name="image" value="${image}"></c:param>
-                                </c:url>
-
-                                <a href="${productUpdate}">
-                                    <button type="button" class="btn btn-outline-primary m-2">Update</button>
-                                </a>
-                            </td>
+                            <th scope="row">${order.id}</th>
+                            <td>${order.payer}</td>
+                            <td>${order.transaction}</td>
+                            <td>${order.shipping}</td>
+                            <td>${order.description}</td>
                         </tr>
                     </c:forEach>
 

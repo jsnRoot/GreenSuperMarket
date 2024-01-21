@@ -294,7 +294,9 @@
                             <li>Subtotal <span>Rs. <span id="subtotal">454.98</span> </span> </li>
                             <li>Total <span>Rs. <span id="total">454.98</span> </span> </li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a class="primary-btn"
+                           onclick="sendPay()">PROCEED TO
+                            CHECKOUT</a>
                     </div>
                 </div>
             </div>
@@ -452,6 +454,39 @@
 
         $(listForRemove).each(function () { $(this).remove(); });
     </script>
+
+<script>
+    function sendPay(){
+        var shipping = 100;
+        var tax = 100;
+        var subtotal = parseInt(document.getElementById('subtotal').innerText);
+        var total =  parseInt(document.getElementById('total').innerText);
+
+        let theList = [];
+        if (localStorage.getItem("cart")) {
+            // alert("cart is present");
+            theList = JSON.parse(localStorage.getItem("cart"));
+        } else {
+            // alert("cart is not present");
+        }
+
+        var allItems = " "
+        theList.map((item)=>{
+            var oneItem = item.name + " - " + item.amount + " "
+            allItems = allItems + oneItem
+        })
+
+        alert(subtotal);
+        alert(total);
+        alert(allItems);
+
+
+
+
+        location.href="/Checkout?subtotal="+subtotal+"&shipping="+shipping+"&tax="+tax+"&total="+(total+shipping+tax)+"&description="+allItems;
+
+    }
+</script>
 
 </body>
 
